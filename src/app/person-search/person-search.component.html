@@ -2,7 +2,10 @@
 <form #searchForm="ngForm">
   <input type="text" [(ngModel)]="searchTerm" name="searchTerm">
 </form>
-<table>
+<label *ngIf="status===LoadingStatus.LOADING">Loading...</label>
+<label *ngIf="status===LoadingStatus.ERROR">Error getting persons</label>
+<label *ngIf="status===LoadingStatus.LOADED">Loaded</label>
+<table *ngIf="status===LoadingStatus.LOADED">
   <thead>
   <tr>
     <th>Name</th>

@@ -3,6 +3,7 @@ import {PersonService} from "../shared/person.service";
 import {Person} from "../shared/person";
 import {Observable} from "rxjs/Observable";
 //import {Subscription} from "rxjs/Subscription";
+import {LoadingStatus} from "../shared/loading-status.enum";
 
 @Component({
   selector: 'app-person-search',
@@ -11,28 +12,40 @@ import {Observable} from "rxjs/Observable";
 })
 export class PersonSearchComponent implements OnInit {
 
+  LoadingStatus = LoadingStatus;
+
   searchTerm = '';
   persons: Person[] = [];
   //subscription: Subscription;
   @ViewChild('searchForm') form;
+  status: LoadingStatus;
 
   constructor(private personService: PersonService) { }
 
   ngOnInit() {
     this.form.control.valueChanges
       .debounceTime(200)
+      .do(() => {
+      this.persons = [];
+          this.status = LoadingStatus.LOADING
+        }
+      )
       .switchMap(s => this.personService.search(this.searchTerm)
-        .catch(
-          error => {
-            console.log(error);
-            return Observable.of(undefined);
-          }
-        )
+          .catch(
+            error => {
+              console.log(error);
+              this.status = LoadingStatus.ERROR;
+              return Observable.of(undefined);
+            }
+          )
       )
       .subscribe(
         (data) => {
-          console.log(data);
-          this.persons = data;
+          if (data !== undefined) {
+            console.log(data);
+            this.status = LoadingStatus.LOADED;
+            this.persons = data;
+          }
         }
       )
   }
