@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PersonService} from "../shared/person.service";
 import {Person} from "../shared/person";
+import {Observable} from "rxjs/Observable";
 //import {Subscription} from "rxjs/Subscription";
 
 @Component({
@@ -19,7 +20,14 @@ export class PersonSearchComponent implements OnInit {
 
   ngOnInit() {
     this.form.control.valueChanges
-      .switchMap(s => this.personService.search(this.searchTerm))
+      .switchMap(s => this.personService.search(this.searchTerm)
+        .catch(
+          error => {
+            console.log(error);
+            return Observable.of(undefined);
+          }
+        )
+      )
       .subscribe(
         (data) => {
           console.log(data);
