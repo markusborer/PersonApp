@@ -20,6 +20,7 @@ export class PersonSearchComponent implements OnInit {
 
   ngOnInit() {
     this.form.control.valueChanges
+      .debounceTime(200)
       .switchMap(s => this.personService.search(this.searchTerm)
         .catch(
           error => {
