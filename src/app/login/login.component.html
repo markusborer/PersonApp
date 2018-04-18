@@ -1,0 +1,10 @@
+<p>
+  login works!
+</p>
+<p *ngIf="needsLogin">
+  Sie müssen sich anmelden!
+</p>
+<p>
+  <button (click)="login()" *ngIf="!isLoggedIn()">Login</button>
+  <button (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
+</p>

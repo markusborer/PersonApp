@@ -15,12 +15,16 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import {LoginService} from "./shared/login.service";
+import { LoginComponent } from './login/login.component';
+import {AuthGardService} from "./shared/auth-gard.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PersonSearchComponent
+    PersonSearchComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,9 @@ import 'rxjs/add/operator/switchMap';
     AppRoutingModule
   ],
   providers: [
-    PersonService
+    PersonService,
+    LoginService,
+    AuthGardService
   ],
   bootstrap: [AppComponent]
 })
