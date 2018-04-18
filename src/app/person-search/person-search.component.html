@@ -7,12 +7,14 @@
   <tr>
     <th>Name</th>
     <th>Vorname</th>
+    <th>Email</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let person of persons">
     <td>{{person.name}}</td>
     <td>{{person.vorname}}</td>
+    <td>{{person.getEmail()}}</td>
   </tr>
   </tbody>
 </table>
